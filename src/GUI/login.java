@@ -81,5 +81,4 @@ public class login extends JPanel {
     public JButton getBtnShutDown() {
         return btnShutDown;
     }
-
 }
