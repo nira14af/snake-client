@@ -10,7 +10,6 @@ import java.awt.Color;
 public class highscore extends JPanel {
     private JButton btnMenu;
 
-
     public highscore() {
 
         setBackground(Color.LIGHT_GRAY);
