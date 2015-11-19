@@ -44,8 +44,8 @@ public class screen extends JFrame {
         login.setBackground(Color.LIGHT_GRAY);
         contentPane.add(login, LOGIN);
 
-        UserMenu = new UserMenu();
-        contentPane.add(UserMenu, USERMENU);
+        userMenu = new UserMenu();
+        contentPane.add(userMenu, USERMENU);
 
         startGame = new startGame();
         contentPane.add(startGame, STARTGAME);
@@ -64,7 +64,7 @@ public class screen extends JFrame {
     }
 
     public UserMenu getUsermenu() {
-        return UserMenu;
+        return userMenu;
     }
 
     public startGame getStartgame() {
