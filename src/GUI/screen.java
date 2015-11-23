@@ -1,6 +1,5 @@
 package GUI;
 
-
 /**
  * Created by Nicolaj on 19/11/2015.
  */

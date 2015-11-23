@@ -63,7 +63,6 @@ public class login extends JPanel {
     public void addActionListener(ActionListener l) {
         btnContinue.addActionListener(l);
         btnShutDown.addActionListener(l);
-
     }
 
     public JTextField getUserNameInput() {
