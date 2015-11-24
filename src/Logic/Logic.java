@@ -28,6 +28,7 @@ public class Logic {
     public highscore highscore;
     public Api api;
 
+
     public Logic() {
         screen = new screen();
         screen.setVisible(true);
@@ -57,11 +58,12 @@ public class Logic {
             ClientResponse response = webResource.
                     post(ClientResponse.class, "{\"username\": \"" + Username + "\", \"password\": \"" + Password + "\"}");
 
-            if (e.getSource() == screen.getLogin().getBtnContinue()) {
+                if (e.getSource() == screen.getLogin().getBtnContinue()) {
 
                 if (response.getStatus() == 200)
                 {
                     screen.show(GUI.screen.USERMENU);
+                    currentUser = Username;
                 }
                 if (response.getStatus() == 400)
                 {
@@ -89,6 +91,7 @@ public class Logic {
                     screen.show(GUI.screen.STARTGAME);
                 } else if (e.getSource() == screen.getUsermenu().getHighscore()) {
                     screen.show(GUI.screen.HIGHSCORE);
+
                 } else if (e.getSource() == screen.getUsermenu().getDeleteGame()) {
                     screen.show(GUI.screen.DELETEGAME);
                 }
@@ -111,12 +114,19 @@ public class Logic {
         public class ShowHighScoreActionListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
 
-                Client client = Client.create();
 
-                WebResource webResource = client.resource("http://localhost:23000/api/scores/");
+                if (e.getSource() == screen.getHighscore().getBtnHighscore()) {
+                    Client client = Client.create();
 
-                ClientResponse response = webResource.
-                        get(ClientResponse.class, "{\"username\": \"" + Username + "\", \"password\": \"" + Password + "\"}");
+                    WebResource webResource = client.resource("http://localhost:23000/api/scores/");
+
+                    System.out.println("Der er nu forbindelse til serveren");
+                    ClientResponse response = webResource.
+                    get(ClientResponse.class, "{\"id\", \"user_id"\, "game_id"\, "score"\, "opponent_id + "\"}");
+
+                    //  post(ClientResponse.class, "{\"username\": \"" + Username + "\", \"password\": \"" + Password + "\"}");
+
+                }
 
                 if (e.getSource() == screen.getHighscore().getBtnMenu()) {
                     screen.show(GUI.screen.USERMENU);
