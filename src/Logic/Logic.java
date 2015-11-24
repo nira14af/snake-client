@@ -111,6 +111,13 @@ public class Logic {
         public class ShowHighScoreActionListener implements ActionListener {
             public void actionPerformed(ActionEvent e) {
 
+                Client client = Client.create();
+
+                WebResource webResource = client.resource("http://localhost:23000/api/scores/");
+
+                ClientResponse response = webResource.
+                        get(ClientResponse.class, "{\"username\": \"" + Username + "\", \"password\": \"" + Password + "\"}");
+
                 if (e.getSource() == screen.getHighscore().getBtnMenu()) {
                     screen.show(GUI.screen.USERMENU);
                 }
