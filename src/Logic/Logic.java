@@ -41,13 +41,12 @@ public class Logic {
         screen.getHighscore().addActionListener(new ShowHighScoreActionListener());
         screen.getDeleteGame().addActionListener(new DeleteGameActionListener());
     }
-    
+
     public class LoginActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
 
-            boolean authenticated = false;
-            // System.out.println("UserValidation bliver kørt");
+
             String Username = screen.getLogin().getUserNameInput().getText();
             String Password = screen.getLogin().getPasswordInput().getText();
 
@@ -62,14 +61,10 @@ public class Logic {
 
                 if (response.getStatus() == 200)
                 {
-                    authenticated = true;
-                    System.out.println("UserValidation bliver kørt");
                     screen.show(GUI.screen.USERMENU);
                 }
                 if (response.getStatus() == 400)
                 {
-                    authenticated = false;
-                    System.out.println("Brugeren findes ikke");
                     JOptionPane.showMessageDialog(screen, "Invalid Username or Password, please try again"
                             , "Invalid input", JOptionPane.ERROR_MESSAGE);
 
