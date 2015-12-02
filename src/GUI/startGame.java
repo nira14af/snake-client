@@ -1,46 +1,51 @@
 package GUI;
 
+import SDK.Model.Game;
+
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class startGame extends JPanel {
-    private JLabel lblFindGame;
+    private JLabel lblStartGame;
     private JButton btnMenu;
-    private JLabel lblSetGameDirections;
-    private JTextField directionsTextfield;
-    private JLabel lblChooseOpponent;
+    private JLabel lblSetControls;
+    private JTextField ControlsTextfield;
+    private JLabel lblChooseGame;
     private JComboBox comboBox;
     private JButton btnStartGame;
 
     public startGame() {
+
+        setBackground(Color.LIGHT_GRAY);
         setLayout(null);
 
-        lblFindGame = new JLabel("Find game");
-        lblFindGame.setFont(new Font("Lucida Grande", Font.BOLD, 13));
-        lblFindGame.setBounds(187, 6, 101, 16);
-        add(lblFindGame);
+        lblStartGame = new JLabel("Start game");
+        lblStartGame.setFont(new Font("Lucida Grande", Font.BOLD, 13));
+        lblStartGame.setBounds(187, 6, 101, 16);
+        add(lblStartGame);
 
         btnMenu = new JButton("Cancel");
-        btnMenu.setBounds(310, 240, 117, 29);
+        btnMenu.setBounds(301, 200, 117, 29);
         add(btnMenu);
 
-        lblChooseOpponent = new JLabel("1. Choose opponent");
-        lblChooseOpponent.setBounds(40, 70, 175, 16);
-        add(lblChooseOpponent);
+        lblChooseGame = new JLabel("1. Choose game");
+        lblChooseGame.setBounds(40, 70, 175, 16);
+        add(lblChooseGame);
 
         comboBox = new JComboBox();
-        comboBox.setBounds(40, 85, 52, 27);
+        comboBox.setBounds(40, 85, 134, 27);
         add(comboBox);
 
-        lblSetGameDirections = new JLabel("2. Set directions (W,A,S,D)");
-        lblSetGameDirections.setBounds(40, 130, 175, 16);
-        add(lblSetGameDirections);
+        lblSetControls = new JLabel("2. Set controls (W,A,S,D)");
+        lblSetControls.setBounds(208, 70, 175, 16);
+        add(lblSetControls);
 
-        directionsTextfield = new JTextField();
-        directionsTextfield.setBounds(40, 150, 134, 28);
-        add(directionsTextfield);
+        ControlsTextfield = new JTextField();
+        ControlsTextfield.setBounds(200, 83, 134, 28);
+        add(ControlsTextfield);
 
         btnStartGame = new JButton("Start game");
         btnStartGame.setBounds(40, 200, 117, 29);
@@ -49,6 +54,16 @@ public class startGame extends JPanel {
     public void addActionListener(ActionListener l) {
         btnMenu.addActionListener(l);
         btnStartGame.addActionListener(l);
+    }
+
+    public void setGames (ArrayList<Game> games){
+        for (Game g: games) {
+            comboBox.addItem(g.getName());
+        }
+    }
+
+    public JComboBox getComboBox (){
+        return comboBox;
     }
 
     public JButton getBtnMenu() {

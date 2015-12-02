@@ -12,8 +12,7 @@ public class CreateGame extends JPanel {
     private JButton btnMenu;
     private JButton btnCreateGame;
     private JTextField textFieldCreateGame;
-    private JTextField textFietextFieldCreateGameld;
-    private JTextField textFieldMapSize;
+    private JTextField textFieldHostControls;
 
     public CreateGame() {
 
@@ -50,28 +49,18 @@ public class CreateGame extends JPanel {
 
         JLabel lblControls = new JLabel("Controls");
         lblControls.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        lblControls.setBounds(33, 134, 96, 23);
+        lblControls.setBounds(33, 165, 96, 23);
         add(lblControls);
 
-        textFietextFieldCreateGameld = new JTextField();
-        textFietextFieldCreateGameld.setColumns(10);
-        textFietextFieldCreateGameld.setBounds(152, 132, 134, 28);
-        add(textFietextFieldCreateGameld);
+        textFieldHostControls = new JTextField();
+        textFieldHostControls.setColumns(10);
+        textFieldHostControls.setBounds(152, 163, 134, 28);
+        add(textFieldHostControls);
 
         JLabel lblChooseYourControls = new JLabel("Choose your controls (A, S, D W)");
         lblChooseYourControls.setFont(new Font("Tahoma", Font.PLAIN, 9));
-        lblChooseYourControls.setBounds(293, 138, 167, 23);
+        lblChooseYourControls.setBounds(293, 167, 167, 23);
         add(lblChooseYourControls);
-
-        JLabel lblMapSize = new JLabel("Map size");
-        lblMapSize.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        lblMapSize.setBounds(33, 181, 96, 23);
-        add(lblMapSize);
-
-        textFieldMapSize = new JTextField();
-        textFieldMapSize.setColumns(10);
-        textFieldMapSize.setBounds(152, 179, 134, 28);
-        add(textFieldMapSize);
     }
 
     public void addActionListener(ActionListener l) {
@@ -91,7 +80,7 @@ public class CreateGame extends JPanel {
         return textFieldCreateGame;
     }
 
-    public JTextField getTextFieldHostControls(){
-        return textFieldMapSize;
+    public JTextField gettextFieldHostControls(){
+        return textFieldHostControls;
     }
 }
