@@ -1,6 +1,6 @@
 package GUI;
 
-import SDK.Model.Game;
+import SDK.Game;
 
 import java.awt.Font;
 import java.awt.event.ActionListener;
