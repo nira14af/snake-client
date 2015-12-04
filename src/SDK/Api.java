@@ -11,17 +11,33 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Api {
+public class Api
+{
 
-    ServerConnection serverConnection = new ServerConnection();
 
-    public int login(User user) {
-        int data = serverConnection.postLogin(new Gson().toJson(user), "login/");
+        ServerConnection serverConnection = new ServerConnection();
 
-        JSONParser parser = new JSONParser();
+        public String login(User user)
+        {
 
-        return data;
-    }
+            String data = serverConnection.post(new Gson().toJson(user), "login/");
 
-    
+            JSONParser parser = new JSONParser();
+
+            JSONObject jsonObject = null;
+            try
+            {
+                Object object = parser.parse(data);
+                jsonObject = (JSONObject) object;
+            } catch (ParseException e)
+            {
+                e.printStackTrace();
+            }
+
+            user.setId((int) (long) jsonObject.get("userid"));
+
+        return "";
+        }
 }
+
+
