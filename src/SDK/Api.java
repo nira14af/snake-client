@@ -16,26 +16,27 @@ public class Api {
     ServerConnection serverConnection = new ServerConnection();
 
     public String login(User user) {
+
         String data = serverConnection.post(new Gson().toJson(user), "login/");
 
         JSONParser parser = new JSONParser();
 
-        JSONObject jsonObject = null;
+        JSONObject loginData = null;
+
         try {
             Object object = parser.parse(data);
-            jsonObject = (JSONObject) object;
+            loginData = (JSONObject) object;
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
-        if (jsonObject != null) {
+        if (loginData != null) {
 
-            if (jsonObject.get("userid") != null)
-                user.setId((int) (long) jsonObject.get("userid"));
+            if (loginData.get("username") != null)
+                user.setId((int) (long) loginData.get("username"));
 
-            return (String) jsonObject.get("message");
+            return (String) loginData.get("message");
         }
-
         return "";
     }
 
