@@ -4,13 +4,9 @@ package GUI;
  * Created by Nicolaj on 19/11/2015.
  */
 
-        import java.awt.CardLayout;
-        import java.awt.Color;
-        import java.awt.Toolkit;
-
-        import javax.swing.JFrame;
-        import javax.swing.JPanel;
-        import javax.swing.border.EmptyBorder;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
 
 public class screen extends JFrame {
 
@@ -19,6 +15,8 @@ public class screen extends JFrame {
     public static final String STARTGAME = "startGame";
     public static final String HIGHSCORE = "highscore";
     public static final String DELETEGAME = "deleteGame";
+    public static final String CREATEGAME = "creategame";
+
 
     private JPanel contentPane;
     private login login;
@@ -27,6 +25,7 @@ public class screen extends JFrame {
     private startGame startGame;
     private highscore highscore;
     private deleteGame deleteGame;
+    private CreateGame createGame;
 
 
     public screen() {
@@ -55,6 +54,9 @@ public class screen extends JFrame {
         deleteGame = new deleteGame();
         contentPane.add(deleteGame, DELETEGAME);
 
+        createGame = new CreateGame();
+        contentPane.add(createGame, CREATEGAME);
+
         c = (CardLayout) getContentPane().getLayout();
     }
 
@@ -78,8 +80,11 @@ public class screen extends JFrame {
         return deleteGame;
     }
 
+    public CreateGame getCreateGame() {
+        return createGame;
+    }
+
     public void show(String card) {
         c.show(this.getContentPane(), card);
     }
-
 }

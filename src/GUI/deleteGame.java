@@ -1,15 +1,16 @@
 package GUI;
 
-import java.awt.Font;
+import SDK.Game;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
+import java.util.ArrayList;
 
 public class deleteGame extends JPanel {
     private JButton btnMenu;
     private JButton btnDeleteGame;
+    private JComboBox comboBox;
 
     public deleteGame() {
 
@@ -30,12 +31,22 @@ public class deleteGame extends JPanel {
         btnDeleteGame.setBounds(58, 230, 96, 23);
         add(btnDeleteGame);
 
+        comboBox = new JComboBox();
+        comboBox.setBounds(40, 105, 150, 27);
+        add(comboBox);
     }
 
     public void addActionListener(ActionListener l) {
         btnMenu.addActionListener(l);
         btnDeleteGame.addActionListener(l);
 
+    }
+
+    public void setGamesInCombobox(ArrayList<Game> games) {
+        comboBox.removeAllItems();
+        for (Game g : games) {
+            comboBox.addItem(g.getName());
+        }
     }
 
     public JButton getBtnMenu() {

@@ -1,11 +1,8 @@
 package GUI;
 
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
 
 public class UserMenu extends JPanel {
 
@@ -14,6 +11,7 @@ public class UserMenu extends JPanel {
     private JButton btnHighscore;
     private JButton btnDeleteGame;
     private JButton btnLogOut;
+    private JButton btnCreateGame;
 
     public UserMenu() {
         setBackground(Color.LIGHT_GRAY);
@@ -36,6 +34,10 @@ public class UserMenu extends JPanel {
         btnDeleteGame.setBounds(164, 146, 150, 23);
         add(btnDeleteGame);
 
+        btnCreateGame = new JButton("Create game");
+        btnCreateGame.setBounds(164, 170, 150, 23);
+        add(btnCreateGame);
+
         btnLogOut = new JButton("Log out");
         btnLogOut.setBounds(267, 216, 108, 23);
         add(btnLogOut);
@@ -50,6 +52,7 @@ public class UserMenu extends JPanel {
         btnStartGame.addActionListener(l);
         btnHighscore.addActionListener(l);
         btnDeleteGame.addActionListener(l);
+        btnCreateGame.addActionListener(l);
         btnLogOut.addActionListener(l);
     }
 
@@ -73,4 +76,7 @@ public class UserMenu extends JPanel {
         return btnDeleteGame;
     }
 
+    public JButton getBtnCreateGame() {
+        return btnCreateGame;
+    }
 }
