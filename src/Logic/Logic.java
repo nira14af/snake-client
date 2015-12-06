@@ -62,7 +62,6 @@ public class Logic {
             }
         }
     }
-
     public class UsermenuActionListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e)
@@ -136,7 +135,6 @@ public class Logic {
     }
 
     private class CreateGameActionHandler implements ActionListener {
-
         public void actionPerformed(ActionEvent e)
 
         {
@@ -150,18 +148,19 @@ public class Logic {
 
                 createGame.setMapSize(35);
                 host.setId(currentUser.getId());
-                createGame.setName(screen.getCreateGame().getTextFieldCreateGame().getText());
-                host.setControls(screen.getCreateGame().gettextFieldHostControls().getText());
+                createGame.setName(screen.getCreateGame().getTextFieldGameName().getText());
+                host.setControls(screen.getCreateGame().getTextFieldHostControls().getText());
                 createGame.setHost(host);
                 createGame.setOpponent(null);
                 String message = api.createGame(createGame);
 
-                JOptionPane.showMessageDialog(screen, "The game has been created"
+                JOptionPane.showMessageDialog(screen, "The game: \n" + createGame.getName() + "\nhas been created"
                         , "Confirmation", JOptionPane.INFORMATION_MESSAGE);
 
                 screen.show(GUI.screen.USERMENU);
+                screen.getCreateGame().getTextFieldGameName().setText("");
+                screen.getCreateGame().getTextFieldHostControls().setText("");
             }
         }
     }
-
 }
