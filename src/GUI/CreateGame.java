@@ -1,18 +1,15 @@
 package GUI;
 
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import java.awt.Color;
-import javax.swing.JTextField;
 
 public class CreateGame extends JPanel {
     private JButton btnMenu;
     private JButton btnCreateGame;
-    private JTextField textFieldCreateGame;
+    private JTextField textFieldGameName;
     private JTextField textFieldHostControls;
+
 
     public CreateGame() {
 
@@ -42,10 +39,10 @@ public class CreateGame extends JPanel {
         lblGameName.setBounds(33, 81, 96, 23);
         add(lblGameName);
 
-        textFieldCreateGame = new JTextField();
-        textFieldCreateGame.setBounds(152, 76, 134, 28);
-        add(textFieldCreateGame);
-        textFieldCreateGame.setColumns(10);
+        textFieldGameName = new JTextField();
+        textFieldGameName.setBounds(152, 76, 134, 28);
+        add(textFieldGameName);
+        textFieldGameName.setColumns(10);
 
         JLabel lblControls = new JLabel("Controls");
         lblControls.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -68,6 +65,18 @@ public class CreateGame extends JPanel {
         btnCreateGame.addActionListener(l);
     }
 
+    public JTextField getTextFieldGameName() {
+        return textFieldGameName;
+    }
+
+    public JTextField getTextFieldHostControls() {
+        return textFieldHostControls;
+    }
+
+    public void setTextFieldHostControls(JTextField textFieldHostControls) {
+        this.textFieldHostControls = textFieldHostControls;
+    }
+
     public JButton getBtnMenu() {
         return btnMenu;
     }
@@ -76,11 +85,5 @@ public class CreateGame extends JPanel {
         return btnCreateGame;
     }
 
-    public JTextField getTextFieldCreateGame(){
-        return textFieldCreateGame;
-    }
 
-    public JTextField gettextFieldHostControls(){
-        return textFieldHostControls;
-    }
 }
