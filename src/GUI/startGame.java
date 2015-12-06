@@ -2,10 +2,9 @@ package GUI;
 
 import SDK.Game;
 
-import java.awt.Font;
-import java.awt.event.ActionListener;
 import javax.swing.*;
-import java.awt.Color;
+import java.awt.*;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class startGame extends JPanel {
@@ -57,8 +56,9 @@ public class startGame extends JPanel {
     }
 
     public void setGames (ArrayList<Game> games){
-        for (Game g: games) {
-            comboBox.addItem(g.getName());
+
+        for (Game openGames : games) {
+            comboBox.addItem(openGames.getName());
         }
     }
 
