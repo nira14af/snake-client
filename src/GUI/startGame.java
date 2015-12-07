@@ -1,6 +1,6 @@
 package GUI;
 
-import SDK.API;
+import SDK.Api;
 import SDK.Game;
 
 import javax.swing.*;
@@ -17,7 +17,7 @@ public class startGame extends JPanel {
     private JLabel lblChooseGame;
     private JComboBox comboBox;
     private JButton btnStartGame;
-    private API api;
+    private Api api;
 
 
     public startGame() {
