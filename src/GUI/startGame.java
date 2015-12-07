@@ -1,5 +1,6 @@
 package GUI;
 
+import SDK.API;
 import SDK.Game;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class startGame extends JPanel {
+    ArrayList<Game> games;
     private JLabel lblStartGame;
     private JButton btnMenu;
     private JLabel lblSetControls;
@@ -15,6 +17,8 @@ public class startGame extends JPanel {
     private JLabel lblChooseGame;
     private JComboBox comboBox;
     private JButton btnStartGame;
+    private API api;
+
 
     public startGame() {
 
@@ -26,7 +30,7 @@ public class startGame extends JPanel {
         lblStartGame.setBounds(187, 6, 101, 16);
         add(lblStartGame);
 
-        btnMenu = new JButton("Cancel");
+        btnMenu = new JButton("Menu");
         btnMenu.setBounds(301, 200, 117, 29);
         add(btnMenu);
 
@@ -37,6 +41,7 @@ public class startGame extends JPanel {
         comboBox = new JComboBox();
         comboBox.setBounds(40, 85, 134, 27);
         add(comboBox);
+
 
         lblSetControls = new JLabel("2. Set controls (W,A,S,D)");
         lblSetControls.setBounds(208, 70, 175, 16);
@@ -55,12 +60,13 @@ public class startGame extends JPanel {
         btnStartGame.addActionListener(l);
     }
 
-    public void setGames (ArrayList<Game> games){
-
-        for (Game openGames : games) {
-            comboBox.addItem(openGames.getName());
+    public void setGamesInCombobox(ArrayList<Game> games) {
+        comboBox.removeAllItems();
+        for (Game currentusersGames : games) {
+            comboBox.addItem(currentusersGames.getName());
         }
     }
+
 
     public JComboBox getComboBox (){
         return comboBox;
@@ -70,7 +76,11 @@ public class startGame extends JPanel {
         return btnMenu;
     }
 
-    public JButton getBtnShutDown() {
+    public JButton getBtnStartgame() {
         return btnStartGame;
+    }
+
+    public JTextField getControlsTextfield() {
+        return ControlsTextfield;
     }
 }
