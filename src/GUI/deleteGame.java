@@ -8,9 +8,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class deleteGame extends JPanel {
+    public JComboBox comboBoxDeletedGame;
     private JButton btnMenu;
     private JButton btnDeleteGame;
-    private JComboBox comboBox;
 
     public deleteGame() {
 
@@ -31,21 +31,20 @@ public class deleteGame extends JPanel {
         btnDeleteGame.setBounds(58, 230, 96, 23);
         add(btnDeleteGame);
 
-        comboBox = new JComboBox();
-        comboBox.setBounds(40, 105, 150, 27);
-        add(comboBox);
+        comboBoxDeletedGame = new JComboBox();
+        comboBoxDeletedGame.setBounds(40, 105, 150, 27);
+        add(comboBoxDeletedGame);
     }
 
     public void addActionListener(ActionListener l) {
         btnMenu.addActionListener(l);
         btnDeleteGame.addActionListener(l);
-
     }
 
     public void setGamesInCombobox(ArrayList<Game> games) {
-        comboBox.removeAllItems();
+        comboBoxDeletedGame.removeAllItems();
         for (Game g : games) {
-            comboBox.addItem(g.getName());
+            comboBoxDeletedGame.addItem(g.getName());
         }
     }
 
@@ -57,4 +56,15 @@ public class deleteGame extends JPanel {
         return btnDeleteGame;
     }
 
+    public void deleteSelectedGame() {
+        comboBoxDeletedGame.removeItemAt(comboBoxDeletedGame.getSelectedIndex());
+    }
+
+    public String getSelectedDeleteGame() {
+        return (String) comboBoxDeletedGame.getSelectedItem();
+    }
+
+    public void removeGame() {
+        comboBoxDeletedGame.removeItemAt(comboBoxDeletedGame.getSelectedIndex());
+    }
 }
