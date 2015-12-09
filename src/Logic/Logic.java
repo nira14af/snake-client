@@ -1,7 +1,12 @@
 package Logic;
 
-import GUI.*;
-import SDK.*;
+import GUI.screen;
+import SDK.Api;
+import SDK.Model.Game;
+import SDK.Model.Gamer;
+import SDK.Model.Score;
+import SDK.Model.User;
+import SDK.ServerConnection;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -9,31 +14,29 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Logic {
-    public startGame StartGame;
-    public login login;
-    public UserMenu userMenu;
-    public highscore highscore;
-    public Api api;
+    private screen screen;
     private User currentUser;
-    private GUI.screen screen;
+    private Api api;
     private ArrayList<User> users;
     private ArrayList<Game> games;
     private ArrayList<Game> deleteGames;
-    private ArrayList<Score> showHighscores;
-
+    private ArrayList<Score> scores;
+    private ServerConnection serverConnection;
 
     public Logic() {
         screen = new screen();
         currentUser = new User();
+        api = new Api();
         screen.setVisible(true);
     }
 
     public void run() {
         screen.getLogin().addActionListener(new LoginActionListener());
-        screen.getUsermenu().addActionListener(new UsermenuActionListener());
-        screen.getStartgame().addActionListener(new StartGameActionListener());
-        screen.getHighscore().addActionListener(new ShowHighScoreActionListener());
+        screen.getUsermenu().addActionListener(new UserMenuActionListener());
         screen.getDeleteGame().addActionListener(new DeleteGameActionListener());
+        screen.getStartgame().addActionListener(new StartGameActionListener());
+        screen.getHighscore().addActionListener(new HighscoreActionHandler());
+        screen.getCreateGame().addActionListener(new CreateGameActionHandler());
     }
 
     private class LoginActionListener implements ActionListener {
@@ -42,30 +45,29 @@ public class Logic {
             currentUser.setUsername(screen.getLogin().getUserNameInput().getText());
             currentUser.setPassword(screen.getLogin().getPasswordInput().getText());
 
-            String message = api.login(currentUser);
+            String serverResponse = api.login(currentUser);
 
             if (e.getSource() == screen.getLogin().getBtnContinue()) {
 
-                if (message.equals("Login successful")) {
+                if (serverResponse.equals("Login successful")) {
                     users = api.getUsers();
+
                     for (User logged : users) {
                         if (logged.getUsername().equals(screen.getLogin().getUserNameInput().getText())) {
                             currentUser = logged;
-                            System.out.println(currentUser.getId());
                         }
+                        screen.show(GUI.screen.USERMENU);
                     }
-                    screen.show(GUI.screen.USERMENU);
-                } else JOptionPane.showMessageDialog(screen, message);
+                } else JOptionPane.showMessageDialog(screen, serverResponse);
             }
             if (e.getSource() == screen.getLogin().getBtnShutDown()) {
                 System.exit(0);
             }
         }
     }
-    public class UsermenuActionListener implements ActionListener {
 
+    private class UserMenuActionListener implements ActionListener {
         public void actionPerformed(ActionEvent e)
-
         {
             if (e.getSource() == screen.getUsermenu().getBtnLogOut()) {
                 screen.show(GUI.screen.LOGIN);
@@ -73,68 +75,110 @@ public class Logic {
                 screen.getLogin().passwordInput.setText("");
             } else if (e.getSource() == screen.getUsermenu().getStartGame()) {
                 screen.show(GUI.screen.STARTGAME);
-                //  games = api.getGames(currentUser.getId());
-                screen.getStartgame().setGames(games);
-
+                games = api.getGames();
+                screen.getStartgame().setGamesInCombobox(games);
             } else if (e.getSource() == screen.getUsermenu().getHighscore()) {
-                screen.show(GUI.screen.HIGHSCORE);
+                scores = api.getHighscores();
+                //screen.getHighscore().setTableshowHighscore(scores);
+                screen.show(screen.HIGHSCORE);
 
             } else if (e.getSource() == screen.getUsermenu().getDeleteGame()) {
                 screen.show(GUI.screen.DELETEGAME);
+                games = api.getGames();
+                screen.getDeleteGame().setGamesInCombobox(games);
+            } else if (e.getSource() == screen.getUsermenu().getBtnCreateGame()) {
+                screen.show(GUI.screen.CREATEGAME);
             }
         }
     }
 
-    public class StartGameActionListener implements ActionListener {
+    private class DeleteGameActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent e) {
+
+            if (e.getSource() == screen.getDeleteGame().getBtnMenu()) {
+
+                screen.show(GUI.screen.USERMENU);
+            }
+
+            if (e.getSource() == screen.getDeleteGame().getBtnDeleteGame()) {
+                Game deleteGame = new Game();
+                deleteGame.setName(screen.getDeleteGame().getSelectedDeleteGame());
+
+                for (Game game : games) {
+                    if (game.getName() == screen.getDeleteGame().getSelectedDeleteGame()) {
+                        deleteGame = game;
+                    }
+                }
+
+                String message = api.deleteGame(deleteGame.getGameId());
+                if (message.equals("Game was deleted")) {
+                    String name = deleteGame.getName();
+                    JOptionPane.showMessageDialog(screen, name + "\nwas deleted");
+                    screen.getDeleteGame().comboBoxDeletedGame.removeItemAt
+                            (screen.getDeleteGame().comboBoxDeletedGame.getSelectedIndex());
+                    screen.show(GUI.screen.USERMENU);
+                }
+
+            }
+        }
+    }
+
+    private class StartGameActionListener implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
 
             if (e.getSource() == screen.getStartgame().getBtnMenu()) {
                 screen.show(GUI.screen.USERMENU);
             }
-            if (e.getSource() == screen.getDeleteGame().getBtnDeleteGame()) {
-                JOptionPane.showMessageDialog(screen, "Her kan du starte et spil"
-                        , "Slet spil", JOptionPane.ERROR_MESSAGE);
+
+            if (e.getSource() == screen.getStartgame().getBtnStartgame()) {
+
+                Game startGame = new Game();
+
+                for (Game openGame : games) {
+                    if (openGame.getName().equals(screen.getStartgame().getComboBox().getSelectedItem())) {
+                        startGame = openGame;
+                    }
+                }
+
+                Gamer opponent = new Gamer();
+                opponent.setId(currentUser.getId());
+                opponent.setControls(screen.getStartgame().getControlsTextfield().getText());
+                startGame.setOpponent(opponent);
+                String returnMessage = api.startGame(startGame);
+                String winnerName = "";
+
+                for (User winner : users) {
+                    try {
+                        if (winner.getId() == Integer.parseInt(returnMessage)) {
+                            winnerName = winner.getUsername();
+                        }
+                    } catch (NumberFormatException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+
+                if (currentUser.getUsername() != winnerName) {
+                    JOptionPane.showMessageDialog(screen, "You lost to: \n" + winnerName);
+                }
+                if (currentUser.getUsername() == winnerName) {
+                    JOptionPane.showMessageDialog(screen, "You won! Congratulations!");
+                }
             }
         }
     }
 
-    public class ShowHighScoreActionListener implements ActionListener {
+    private class HighscoreActionHandler implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
-
-
-            if (e.getSource() == screen.getHighscore().getBtnHighscore()) {
-//                Client client = Client.create();
-//
-//                WebResource webResource = client.resource("http://localhost:23000/api/scores/");
-//
-//                System.out.println("Der er nu forbindelse til serveren");
-//                ClientResponse response = webResource.
-//                        get(ClientResponse.class, "{\"id\", \"user_id"\, "game_id"\, "score"\, "opponent_id + "\"}");
-//
-//                //  post(ClientResponse.class, "{\"username\": \"" + Username + "\", \"password\": \"" + Password + "\"}");
-
-            }
-
             if (e.getSource() == screen.getHighscore().getBtnMenu()) {
                 screen.show(GUI.screen.USERMENU);
             }
         }
     }
 
-    public class DeleteGameActionListener implements ActionListener {
-        public void actionPerformed(ActionEvent e) {
-
-            if (e.getSource() == screen.getDeleteGame().getBtnMenu()) {
-                screen.show(GUI.screen.USERMENU);
-            }
-            if (e.getSource() == screen.getDeleteGame().getBtnDeleteGame()) {
-                JOptionPane.showMessageDialog(screen, "Her kan du slette et spil"
-                        , "Slet spil", JOptionPane.ERROR_MESSAGE);
-            }
-        }
-    }
-
     private class CreateGameActionHandler implements ActionListener {
+
         public void actionPerformed(ActionEvent e)
 
         {
@@ -152,7 +196,7 @@ public class Logic {
                 host.setControls(screen.getCreateGame().getTextFieldHostControls().getText());
                 createGame.setHost(host);
                 createGame.setOpponent(null);
-                String message = api.createGame(createGame);
+                api.createGame(createGame);
 
                 JOptionPane.showMessageDialog(screen, "The game: \n" + createGame.getName() + "\nhas been created"
                         , "Confirmation", JOptionPane.INFORMATION_MESSAGE);
