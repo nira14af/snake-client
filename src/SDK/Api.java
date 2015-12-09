@@ -1,5 +1,8 @@
 package SDK;
 
+import SDK.Model.Game;
+import SDK.Model.Score;
+import SDK.Model.User;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import org.json.simple.JSONObject;
@@ -14,14 +17,14 @@ public class Api {
 
     ServerConnection serverConnection = new ServerConnection();
 
-    public String login(User user) {
-        String data = serverConnection.post(new Gson().toJson(user), "login/");
+    public String login(User data) {
+        String serverResponse = serverConnection.post(new Gson().toJson(data), "login/");
 
         JSONParser parser = new JSONParser();
 
         JSONObject jsonObject = null;
         try {
-            Object object = parser.parse(data);
+            Object object = parser.parse(serverResponse);
             jsonObject = (JSONObject) object;
         } catch (ParseException e) {
             e.printStackTrace();
@@ -30,11 +33,10 @@ public class Api {
         if (jsonObject != null) {
 
             if (jsonObject.get("userid") != null)
-                user.setId((int) (long) jsonObject.get("userid"));
+                data.setId((int) (long) jsonObject.get("userid"));
 
             return (String) jsonObject.get("message");
         }
-
         return "";
     }
 
@@ -46,7 +48,10 @@ public class Api {
     }
 
     public String createGame(Game game) {
+        //String Data modtager en værdi fra "games/" endpointet i Server.api.Api.
+        //Dataen som kommer fra logikken bliver lavet om fra GSon til Json
         String data = serverConnection.post(new Gson().toJson(game), "games/");
+        //Dataen der bliver returneret som JSON, men bliver lavet om til Gson.
         HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
 
         return hashMap.get("message");
