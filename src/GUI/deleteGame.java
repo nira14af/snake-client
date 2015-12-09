@@ -1,6 +1,6 @@
 package GUI;
 
-import SDK.Game;
+import SDK.Model.Game;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,7 +1,7 @@
 package GUI;
 
 import SDK.Api;
-import SDK.Game;
+import SDK.Model.Game;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,10 +15,9 @@ public class startGame extends JPanel {
     private JLabel lblSetControls;
     private JTextField ControlsTextfield;
     private JLabel lblChooseGame;
-    private JComboBox comboBox;
+    private JComboBox comboBoxWithCurrentGames;
     private JButton btnStartGame;
     private Api api;
-
 
     public startGame() {
 
@@ -38,9 +37,9 @@ public class startGame extends JPanel {
         lblChooseGame.setBounds(40, 70, 175, 16);
         add(lblChooseGame);
 
-        comboBox = new JComboBox();
-        comboBox.setBounds(40, 85, 134, 27);
-        add(comboBox);
+        comboBoxWithCurrentGames = new JComboBox();
+        comboBoxWithCurrentGames.setBounds(40, 85, 134, 27);
+        add(comboBoxWithCurrentGames);
 
 
         lblSetControls = new JLabel("2. Set controls (W,A,S,D)");
@@ -61,15 +60,14 @@ public class startGame extends JPanel {
     }
 
     public void setGamesInCombobox(ArrayList<Game> games) {
-        comboBox.removeAllItems();
+        comboBoxWithCurrentGames.removeAllItems();
         for (Game currentusersGames : games) {
-            comboBox.addItem(currentusersGames.getName());
+            comboBoxWithCurrentGames.addItem(currentusersGames.getName());
         }
     }
 
-
     public JComboBox getComboBox (){
-        return comboBox;
+        return comboBoxWithCurrentGames;
     }
 
     public JButton getBtnMenu() {
