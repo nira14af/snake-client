@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 public class UserMenu extends JPanel {
 
+    //Variabler til GUI deklareres
     private JLabel lblGameMenu;
     private JButton btnStartGame;
     private JButton btnHighscore;
@@ -13,6 +14,7 @@ public class UserMenu extends JPanel {
     private JButton btnLogOut;
     private JButton btnCreateGame;
 
+    //JPanel for UserMenu med ovenstående variabler
     public UserMenu() {
         setBackground(Color.LIGHT_GRAY);
         setLayout(null);
@@ -48,6 +50,7 @@ public class UserMenu extends JPanel {
 
     }
 
+    //ActionListers til knapperne tilføjes
     public void addActionListener(ActionListener l) {
         btnStartGame.addActionListener(l);
         btnHighscore.addActionListener(l);

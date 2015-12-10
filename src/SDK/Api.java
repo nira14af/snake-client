@@ -1,5 +1,7 @@
 package SDK;
 
+//Diveres klasser importeres
+
 import SDK.Model.Game;
 import SDK.Model.Score;
 import SDK.Model.User;
@@ -12,11 +14,17 @@ import org.json.simple.parser.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+//GSON importeres
+//JSON importeres
+
 
 public class Api {
 
+    //Objekt af klassen serverConnection oprettes
     ServerConnection serverConnection = new ServerConnection();
 
+    //Metode til at logge ind.
+    //Sender data til serverconnection via post-metoden og modtager JSON som parses til GSON og derefter returneres der en message
     public String login(User data) {
         String serverResponse = serverConnection.post(new Gson().toJson(data), "login/");
 
@@ -40,36 +48,30 @@ public class Api {
         return "";
     }
 
-
-    public ArrayList<User> getUsers() {
-        String data = serverConnection.get("users/");
-        return new Gson().fromJson(data, new TypeToken<ArrayList<User>>() {
-        }.getType());
-    }
-
+    //Metode til at oprette et spil i serveren
     public String createGame(Game game) {
-        //String Data modtager en værdi fra "games/" endpointet i Server.api.Api.
-        //Dataen som kommer fra logikken bliver lavet om fra GSon til Json
         String data = serverConnection.post(new Gson().toJson(game), "games/");
-        //Dataen der bliver returneret som JSON, men bliver lavet om til Gson.
         HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
 
         return hashMap.get("message");
     }
 
+    //ArrayList af alle game deklareres til getGames
     public ArrayList<Game> getGames() {
         String data = serverConnection.get("games/open/");
         return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>() {
         }.getType());
     }
 
-    public String setOpponent(Game startGame) {
-        String data = serverConnection.put(new Gson().toJson(startGame), "games/join");
-        HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
-
-        return hashMap.get("message");
+    //ArrayList af alle users i systemets deklares som getUsers
+    public ArrayList<User> getUsers() {
+        String data = serverConnection.get("users/");
+        return new Gson().fromJson(data, new TypeToken<ArrayList<User>>() {
+        }.getType());
     }
 
+
+    //Metode til at ramme endpoint i serveren som starter et spil
     public String startGame(Game startGame) {
         String data = serverConnection.put(new Gson().toJson(startGame), "games/start");
         HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
@@ -77,18 +79,13 @@ public class Api {
         if (hashMap.get("message") != null)
             return hashMap.get("message");
         else {
-            Game playingGame = new Gson().fromJson(data, Game.class);
-            startGame.setWinner(playingGame.getWinner());
+            Game gamedPlayed = new Gson().fromJson(data, Game.class);
+            startGame.setWinner(gamedPlayed.getWinner());
             return startGame.getWinner().getId()+ "";
         }
     }
 
-    public ArrayList<Game> getAvaiableGames(int id) {
-        String data = serverConnection.get("games/host/" + id);
-        return new Gson().fromJson(data, new TypeToken<ArrayList<Game>>() {
-        }.getType());
-    }
-
+    //Metode til at ramme endpoint i serveren som sørger for spil bliver slettet
     public String deleteGame(int gameId) {
         String data = serverConnection.delete("games/" + gameId);
         HashMap<String, String> hashMap = new Gson().fromJson(data, HashMap.class);
@@ -96,12 +93,7 @@ public class Api {
         return hashMap.get("message");
     }
 
-    public ArrayList<Game> getGamesByUserId(int id) {
-        String games = serverConnection.get("games/host/" + id);
-        return new Gson().fromJson(games, new TypeToken<ArrayList<Game>>() {
-        }.getType());
-    }
-
+    //Arraylist af alle scores deklareres til getHighscores
     public ArrayList<Score> getHighscores() {
         String data = serverConnection.get("Highscores/");
         return new Gson().fromJson(data, new TypeToken<ArrayList<Score>>() {

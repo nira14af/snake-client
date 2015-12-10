@@ -1,20 +1,17 @@
 package GUI;
 
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-import java.awt.Color;
 
 public class login extends JPanel {
+    //Variabler til GUI deklareres
     public JTextField userNameInput;
     public JPasswordField passwordInput;
     private JButton btnContinue;
     private JButton btnShutDown;
 
+    //JPanel for Login med ovenstående variabler
     public login() {
 
         setBackground(Color.LIGHT_GRAY);
@@ -60,6 +57,7 @@ public class login extends JPanel {
 
     }
 
+    //ActionListers til knapperne tilføjes
     public void addActionListener(ActionListener l) {
         btnContinue.addActionListener(l);
         btnShutDown.addActionListener(l);

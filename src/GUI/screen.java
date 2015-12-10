@@ -10,6 +10,7 @@ import java.awt.*;
 
 public class screen extends JFrame {
 
+    //Konstanter initialiseres med klasser som værdier.
     public static final String LOGIN = "login";
     public static final String USERMENU = "userMenu";
     public static final String STARTGAME = "startGame";
@@ -17,7 +18,7 @@ public class screen extends JFrame {
     public static final String DELETEGAME = "deleteGame";
     public static final String CREATEGAME = "creategame";
 
-
+    //Variabler deklareres
     private JPanel contentPane;
     private login login;
     private UserMenu userMenu;
@@ -27,7 +28,7 @@ public class screen extends JFrame {
     private deleteGame deleteGame;
     private CreateGame createGame;
 
-
+    //Screen klassen laves med et cardLayout hvor JPanels tilføjes til contentPane
     public screen() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 450, 335);
@@ -57,6 +58,7 @@ public class screen extends JFrame {
         createGame = new CreateGame();
         contentPane.add(createGame, CREATEGAME);
 
+        //content
         c = (CardLayout) getContentPane().getLayout();
     }
 

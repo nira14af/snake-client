@@ -8,10 +8,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class deleteGame extends JPanel {
+
     public JComboBox comboBoxDeletedGame;
+    //Variabler til GUI deklareres
     private JButton btnMenu;
     private JButton btnDeleteGame;
 
+    //JPanel for DeleteGame med ovenstående variabler
     public deleteGame() {
 
         setBackground(Color.LIGHT_GRAY);

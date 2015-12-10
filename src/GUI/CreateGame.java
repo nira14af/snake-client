@@ -5,12 +5,14 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class CreateGame extends JPanel {
+
+    //Variabler til GUI deklareres
     private JButton btnMenu;
     private JButton btnCreateGame;
     private JTextField textFieldGameName;
     private JTextField textFieldHostControls;
 
-
+    //JPanel for CreateGame med ovenstående variabler
     public CreateGame() {
 
         setBackground(Color.LIGHT_GRAY);
@@ -60,6 +62,7 @@ public class CreateGame extends JPanel {
         add(lblChooseYourControls);
     }
 
+    //ActionListers til knapperne tilføjes
     public void addActionListener(ActionListener l) {
         btnMenu.addActionListener(l);
         btnCreateGame.addActionListener(l);
@@ -73,10 +76,6 @@ public class CreateGame extends JPanel {
         return textFieldHostControls;
     }
 
-    public void setTextFieldHostControls(JTextField textFieldHostControls) {
-        this.textFieldHostControls = textFieldHostControls;
-    }
-
     public JButton getBtnMenu() {
         return btnMenu;
     }
@@ -84,6 +83,5 @@ public class CreateGame extends JPanel {
     public JButton getBtnCreateGame() {
         return btnCreateGame;
     }
-
 
 }
